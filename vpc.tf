@@ -12,7 +12,6 @@ module "vpc" {
   enable_vpn_gateway = true
 
   tags = {
-    Terraform   = "true"
-    Environment = "sandbox"
+    name = "ugajin-test"
   }
 }
