@@ -13,11 +13,11 @@ resource "aws_ecs_task_definition" "ugajin_task_definition" {
 
   container_definitions = jsonencode([
     {
-      name         = "nginx"
-      image        = "nginx:latest"
-      cpu          = 10
-      memory       = 512
-      essential    = true
+      name      = "nginx"
+      image     = "nginx:latest"
+      cpu       = 10
+      memory    = 512
+      essential = true
       portMappings = [
         {
           protocol      = "tcp"
@@ -27,4 +27,19 @@ resource "aws_ecs_task_definition" "ugajin_task_definition" {
       ]
     }
   ])
+}
+
+resource "aws_ecs_service" "ugajin_service" {
+  name                              = "ugajin-service"
+  cluster                           = aws_ecs_cluster.ugajin_cluster.id
+  task_definition                   = aws_ecs_task_definition.ugajin_task_definition.arn
+  desired_count                     = 2
+  launch_type                       = "EC2"
+  health_check_grace_period_seconds = 60
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.ugajin_lb_target_group.arn
+    container_name   = "nginx"
+    container_port   = 80
+  }
 }
