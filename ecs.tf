@@ -8,3 +8,23 @@ resource "aws_ecs_cluster" "ugajin_cluster" {
   }
 }
 
+resource "aws_ecs_task_definition" "ugajin_task_definition" {
+  family = "web"
+
+  container_definitions = jsonencode([
+    {
+      name         = "nginx"
+      image        = "nginx:latest"
+      cpu          = 10
+      memory       = 512
+      essential    = true
+      portMappings = [
+        {
+          protocol      = "tcp"
+          containerPort = 80
+          hostPort      = 80
+        }
+      ]
+    }
+  ])
+}
