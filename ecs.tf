@@ -16,13 +16,13 @@ resource "aws_ecs_task_definition" "ugajin_task_definition" {
       name      = "nginx"
       image     = "nginx:latest"
       cpu       = 10
-      memory    = 512
+      memory    = 100
       essential = true
       portMappings = [
         {
           protocol      = "tcp"
           containerPort = 80
-          hostPort      = 80
+          hostPort      = 0 # 動的ポートマッピング
         }
       ]
     }
