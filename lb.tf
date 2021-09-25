@@ -26,6 +26,6 @@ resource "aws_lb_target_group" "ugajin_lb_target_group" {
   health_check {
     interval = 20
     timeout  = 10
-    port = "traffic-port"
+    port     = "traffic-port"
   }
 }
