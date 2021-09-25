@@ -3,9 +3,7 @@ resource "aws_lb" "ugajin_lb" {
   internal           = false
   load_balancer_type = "application"
   subnets            = module.vpc.public_subnets
-  security_groups    = [
-    aws_security_group.ecs_sg.id
-  ]
+  security_groups    = [aws_security_group.lb_sg.id]
 }
 
 resource "aws_lb_listener" "ugajin_lb_listener" {
